@@ -113,11 +113,19 @@ int HOOK_ConvertCode2GlyphIndex(u8 * thisptr, u32 code)
 	
 	if (fontContext12 == 0)
 	{
+#ifdef VER16
+		fontContext12 = InitFontContext(0x59B, L"patch:/Font12.bin", 12 * 12);
+#else
 		fontContext12 = InitFontContext(0x59B, L"rom:/Font12.bin", 12 * 12);
+#endif
 	}
 	if (fontContext16 == 0)
 	{
+#ifdef VER16
+		fontContext16 = InitFontContext(0x2AE, L"patch:/Font16.bin", 16 * 16);
+#else
 		fontContext16 = InitFontContext(0x2AE, L"rom:/Font16.bin", 16 * 16);
+#endif
 	}
 	int glyphIndex = CalcGlyphIndex(code, 0);
 	int isFont12 = 0;

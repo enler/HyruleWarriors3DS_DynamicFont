@@ -31,6 +31,8 @@ all: payload_10.bin
 
 VER11: payload_11.bin
 
+VER16: payload_16.bin
+
 clean:
 	rm -f *.o *.elf *.bin *.dump
 
@@ -46,8 +48,14 @@ payload_11.bin: $(OBJS)
 	$(OBJDUMP) $(DUMPFLAGS) payload_11.elf > payload_11.dump
 	$(OBJCOPY) -O binary payload_11.elf $@
 
+payload_16.bin: $(OBJS)
+	$(LD) $(LDFLAGS) -T symbols/symbol_16.S -o payload_16.elf $(OBJS) $(LIBS)
+	$(OBJDUMP) $(DUMPFLAGS) payload_16.elf > payload_16.dump
+	$(OBJCOPY) -O binary payload_16.elf $@
+
 payload_10.bin : CFLAGS+= -D=VER10
 payload_11.bin : CFLAGS+= -D=VER11
+payload_16.bin : CFLAGS+= -D=VER16
 
 # handle compilation of C files
 
